@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>prc1</title>
+
+</head>
+<body>
+        <div class="form"><label for="guessfield">Enter a guess: </label>
+                <input type="text" class="guessfield" id="guessfield">
+                <input type="submit" value="Submit guess"class="submitguess"></div>
+                <div class="all">
+                        <p class="guesses"></p>
+                        <p class="previousguesses"></p>
+                        <p class="hiorlow"></p>
+                        </div>
+<script>
+    
+    let num = Math.floor(Math.random() * 100) + 1;
+   const guesses=document.querySelector(".guesses");
+    const hiorlow=document.querySelector(".hiorlow");
+    const previousguesses=document.querySelector(".previousguesses");
+    const guessfield=document.querySelector(".guessfield");
+    const submitguess=document.querySelector(".submitguess");
+    let resetbutton;
+    let guesscount=1;
+    function checkguess(){
+        
+    let userguess=Number(guessfield.value);
+    if(guesscount===1)
+    {
+        guesses.textContent="Previous Guesses :"
+    }
+    guesses.textContent += userguess + ' ';
+    if(userguess===num)
+    {
+       previousguesses.style.backgroundColor='green';
+        previousguesses.textContent='Congratutions!!!';
+        hiorlow.textContent=' ';
+        setgameover();
+    }
+    else if(guesscount===10)
+    {
+        previousguesses.style.backgroundColor='red';
+        previousguesses.textContent=' !! Game  OVER !! ';
+        setgameover();
+    }
+    else{
+        previousguesses.style.backgroundColor='red';
+        previousguesses.textContent='Wrong Answer';
+        if(userguess<num)
+        {
+            hiorlow.textContent='Number too low'; 
+        }
+        if(userguess>num)
+        {
+            hiorlow.textContent='Number too high'; 
+        }
+    }
+    guesscount++;
+    guessfield.value='';
+    guessfield.focus();
+    }
+    submitguess.addEventListener('click',checkguess);
+    function setgameover()
+    {
+     guessfield.disabled=true;
+     submitguess.disabled=true;
+     resetbutton=document.createElement('button');
+     resetbutton.textContent="Start new Game";
+     document.body.appendChild(resetbutton);
+     resetbutton.addEventListener('click',resetgame);
+    }
+    function resetgame()
+    {
+        guesscount=1;
+        var setall=document.querySelectorAll(".all p");
+        for(i=0;i<setall.length;i++)
+        {
+            setall[i].textcontent='';
+        }
+    
+    resetbutton.parentNode.removeChild(resetbutton);
+    guessfield.value='';
+    hiorlow.textContent='';
+    guesses.textContent='';
+    previousguesses.textContent='';
+    guessfield.focus();
+    guessfield.disabled=false;
+     submitguess.disabled=false;
+     previousguesses.style.backgroundcolor='white';
+ num= Math.floor(Math.random()*100)+1;}
+</script>
+</body>
+</html>
